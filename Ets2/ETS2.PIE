@@ -1,0 +1,102 @@
+if (Wiimote.Exists) then
+if (Wiimote.HasNunchuk) then
+ debug=Wiimote.Battery
+ if(Wiimote.Battery >= 150) then
+  debug="####"
+  Wiimote.Led1=true
+  Wiimote.Led2=true
+  Wiimote.Led3=true
+  Wiimote.Led4=true
+  var.Rumble=true
+ else                  
+  if(Wiimote.Battery >= 100) then
+   debug="###"
+   Wiimote.Led1=true
+   Wiimote.Led2=true
+   Wiimote.Led3=true
+   Wiimote.Led4=false
+   var.Rumble=true
+  else            
+   if(Wiimote.Battery >= 50) then
+    debug="##"
+    Wiimote.Led1=true
+    Wiimote.Led2=true
+    Wiimote.Led3=false
+    Wiimote.Led4=false
+    var.Rumble=true
+   else  
+    if(Wiimote.Battery >= 0) then
+     debug="#"
+     Wiimote.Led1=true
+     Wiimote.Led2=false
+     Wiimote.Led3=false
+     Wiimote.Led4=false
+     if (var.Rumble)then
+      Wiimote.Rumble=100
+      var.Rumble=false
+     end if
+    else
+    end if
+   end if
+  end if
+ end if
+
+ Key.W = Nunchuk1.Up
+ Key.A = Nunchuk.Left
+ Key.D = Nunchuk.Right
+ Key.Q = Wiimote.Left
+ Key.E = Wiimote.Right
+ Key.Space = Wiimote.B
+ Key.T = Wiimote.Plus
+ Key.M = Wiimote.Minus
+ Key.S = Nunchuk.Down
+ Key.X = Nunchuk.C
+ Key.N = Nunchuk.Z
+ Mouse.XButton2 = Wiimote.UP
+ Mouse.XButton1 = Wiimote.Down
+ Mouse.MiddleButton = Wiimote1.A
+ Key.Enter = Wiimote.Home
+ Key.L = Wiimote.One
+ Key.K = Wiimote.Two
+
+
+
+ //looking around
+ // Requires a sensor bar
+
+var.ButtonFreezeTime = 250ms
+var.PointerBump = KeepDown(Pressed(wiimote.A),var.ButtonFreezeTime) or KeepDown(Pressed(wiimote.B),var.ButtonFreezeTime)
+
+if wiimote.PointerVisible but not var.PointerBump then
+  if(Wiimote1.PointerX <= 0,4)then
+    mouse.x=mouse.x-0,0005
+    wait 100ms
+  endif
+  if(Wiimote1.PointerX >= 0,6)then
+    mouse.x=mouse.x+0,0005
+    wait 100ms
+  endif
+  if(Wiimote1.PointerY <= 0,4)then
+    mouse.y=mouse.y-0,0005
+    wait 100ms
+  endif
+  if(Wiimote1.PointerY >= 0,6)then
+    mouse.y=mouse.y+0,0005
+    wait 100ms
+  endif
+endif
+
+
+
+else
+ debug="Kein Nunchuk gefunden !!!"
+ 
+ Wiimote.Led1=false
+ Wiimote.Led2=true
+ Wiimote.Led3=false
+ Wiimote.Led4=true
+end if
+else
+ debug="Keine Wii FB gefunden !!!"
+end if
+
